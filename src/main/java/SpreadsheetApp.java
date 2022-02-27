@@ -5,7 +5,9 @@
  * @author Donald Chinn
  */
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Stack;
 
 public class SpreadsheetApp {
@@ -41,11 +43,12 @@ public class SpreadsheetApp {
     private static void menuPrintCellFormula(Spreadsheet theSpreadsheet) {
         CellToken cellToken = new CellToken();
         String inputString;
-    
+        int cellID=0;
         System.out.println("Enter the cell: ");
         inputString = readString();
         getCellToken(inputString, 0, cellToken);
-    
+
+
         System.out.println(printCellToken(cellID));
         System.out.println(": ");
     
@@ -62,6 +65,9 @@ public class SpreadsheetApp {
         System.out.println();
     }
 
+    private static void getCellToken(String inputString, int i, CellToken cellToken) {
+    }
+
     private static void menuPrintAllFormulas(Spreadsheet theSpreadsheet) {
         theSpreadsheet.printAllFormulas();
         System.out.println();
@@ -71,7 +77,7 @@ public class SpreadsheetApp {
     private static void menuChangeCellFormula(Spreadsheet theSpreadsheet) {
         String inputCell;
         String inputFormula;
-        CellToken cellToken;
+        CellToken cellToken = theSpreadsheet.getCellToken();
         Stack expTreeTokenStack;
         // ExpressionTreeToken expTreeToken;
     
@@ -107,7 +113,7 @@ public class SpreadsheetApp {
         theSpreadsheet.changeCellFormulaAndRecalculate(cellToken, expTreeTokenStack);
         System.out.println();
     }
-    
+
     public static void main(String[] args) {
         Spreadsheet theSpreadsheet = new Spreadsheet(8);
 
@@ -179,4 +185,12 @@ public class SpreadsheetApp {
         System.out.println("Thank you for using our spreadsheet.");
     }
 
+    //do we need this??? Line 97
+    private static Stack getFormula(String inputFormula) {
+        return null; //temporary
+    }
+    public static boolean printCellToken(int cellID){
+
+        return false;
+    }
 }

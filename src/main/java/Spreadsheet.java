@@ -1,23 +1,32 @@
 import java.util.Stack;
-
 public class Spreadsheet {
-    public void printValues() {
-    }
 
-    public int getNumRows() {
-    }
+    public Spreadsheet(int i) {
 
-    public int getNumColumns() {
-    }
-    CellToken getCellToken(String place, int i, CellToken Cell){
-
-    }
-    public void printCellFormula(CellToken cellToken) {
-    }
-
-    public void printAllFormulas() {
     }
 
     public void changeCellFormulaAndRecalculate(CellToken cellToken, Stack expTreeTokenStack) {
+    }
+    public void getCellToken(String theS, int i, CellToken cellToken){
+
+    }
+
+    public void printCellFormula(CellToken cellToken) {
+
+    }
+
+    public void printAllFormulas() {
+
+    }
+
+    public int getNumRows() {
+        return 0;
+    }
+
+    public int getNumColumns() {
+        return 0;
+    }
+
+    public void printValues() {
     }
 }
