@@ -16,6 +16,14 @@ public class Cell {
 //	ArrayList<Object> feedInto;
 	// The expression tree below represents the formula
 	private ExpressionTree expressionTree;
+
+	public void setFormula(String theFormula) {
+		this.formula = theFormula;
+	}
+
+	public String getFormula() {
+		return this.formula;
+	}
 	
 	public Cell() {
 		expressionTree = new ExpressionTree();

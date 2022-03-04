@@ -82,9 +82,9 @@ public class Graph {
     	
     	Collection<Vertex> vertexSet = vertexMap.values();
     	for (Vertex v: vertexSet) {
-    		for (Edge e: v.adj) {
+    		//for (Edge e: v.adj) {
     			
-    		}
+    		//}
     	}
     }
 }

@@ -6,6 +6,11 @@ import javax.swing.table.JTableHeader;
 import java.awt.*;
 
 class JTableRowHeaders extends JFrame{
+	/**
+	 * Main to test the Spreadsheet GUI
+	 *
+	 * @param args
+	 */
 	    public static void main(String[] args){
 	        Object[][] data = {
 	                { 0,0,0,0,0,0,0,0 },

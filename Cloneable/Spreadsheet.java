@@ -2,22 +2,44 @@ package homeworkSixB;
 
 public class Spreadsheet {
 	private static final int BadCell = -1;
-	private static final int ROW = 5;
-	private static final int COLUMN = 5;
-	private int[][] spreadsheetArray;
-	
-	public Spreadsheet() {
-		spreadsheetArray = new int[ROW][COLUMN];
-	}
-	
-	public Spreadsheet(int theSize) {
-		
-		spreadsheetArray = new int[theSize][theSize];
-	}
-	
+	private static int ROW;
+	private static int COLUMN;
+	private Cell[][] spreadsheetArray;
+
 	/**
-	 * 
-	 * @return
+	 * Default Constructor - sets row and column to 5
+	 */
+	public Spreadsheet() {
+		this.ROW= 5;
+		this.COLUMN = 5;
+		spreadsheetArray = new Cell[5][5];
+	}
+
+	/**
+	 * Overloaded Constructor - sets row and column to parameter
+	 * @param theSize - the size of the spreadsheet
+	 */
+	public Spreadsheet(int theSize) {
+		this.ROW= theSize;
+		this.COLUMN = theSize;
+		spreadsheetArray = new Cell[theSize][theSize];
+	}
+
+	/**
+	 * Add cell to the spreadsheet
+	 *
+	 * @param theCellToken
+	 * @param theFormula
+	 */
+	public void addCell(CellToken theCellToken, String theFormula){
+		Cell cell = new Cell();
+		cell.setFormula(theFormula);
+		this.spreadsheetArray[theCellToken.getRow()-1][theCellToken.getColumn()] = cell;
+	}
+
+
+	/**
+	 * @return ROW - the Row size
 	 */
 	public int getNumRows() {
 		return ROW;
@@ -25,7 +47,7 @@ public class Spreadsheet {
 	
 	/**
 	 * 
-	 * @return
+	 * @return COLUMN - the Column size
 	 */
 	public int getNumColumns() {
 		return COLUMN;
@@ -35,8 +57,8 @@ public class Spreadsheet {
 	 * 
 	 */
 	public void printValues() {
+		//send to the GUI
 		System.out.println();
-		
 	}
 	
 	/**
@@ -44,7 +66,7 @@ public class Spreadsheet {
 	 * @param cellToken
 	 */
 	public void printCellFormula(CellToken cellToken) {
-	    System.out.println(cellToken.getValue());
+		System.out.println(cellToken.getFormula());
 	}
 	
 	public void printAllFormulas() {
