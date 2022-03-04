@@ -63,10 +63,10 @@ public class Spreadsheet {
 	
 	/**
 	 * 
-	 * @param cellToken
+	 * @param theCellToken
 	 */
-	public void printCellFormula(CellToken cellToken) {
-		System.out.println(cellToken.getFormula());
+	public void printCellFormula(CellToken theCellToken) {
+		System.out.println(spreadsheetArray[theCellToken.getRow()-1][theCellToken.getColumn()].getFormula());
 	}
 	
 	public void printAllFormulas() {
