@@ -8,7 +8,7 @@ public class Vertex {
 	 List<Vertex> adj;    // Adjacent vertices
 	 int        dist;   // Cost
 	 Vertex     path;   // Previous vertex on shortest path
-	 List<Edge>	edgeAdj;
+	 List<Edge>	edgeAdj; //all edges for adjacent verticies
 
 	 public Vertex( Token destName ) { 
 		 name = destName;
@@ -17,7 +17,11 @@ public class Vertex {
 		 reset( );
 	 }
 
-	 public void reset( ) { 
+	public Token getName() {
+		return name;
+	}
+
+	public void reset( ) {
 		 dist = Graph.INFINITY;
 		 path = null;
 	 }  

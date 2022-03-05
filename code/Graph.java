@@ -11,7 +11,8 @@ public class Graph {
         Vertex v = getVertex( sourceName );
         Vertex w = getVertex( destName );
         v.adj.add( w );
-        v.edgeAdj.add(new Edge(w,w.path.dist+1));
+        v.path=w;
+        w.edgeAdj.add(new Edge(v,w.path.dist+1));
     }
 
     public void printPath( String destName ) throws NoSuchElementException {
@@ -78,13 +79,15 @@ public class Graph {
     }
     
     public void topologicalSort() {
-    	Stack stack = new Stack();
+    	Queue queue = new LinkedList();
     	int counter = 0;
     	
     	Collection<Vertex> vertexSet = vertexMap.values();
     	for (Vertex v: vertexSet) {
     		for (Edge e: v.edgeAdj) {
-
+                if(v.path.dist==0){
+                    queue.add(v);
+                }
     		}
     	}
     }
