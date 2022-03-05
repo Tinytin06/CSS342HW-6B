@@ -12,7 +12,8 @@ public class Graph {
         Vertex w = getVertex( destName );
         v.adj.add( w );
         v.path=w;
-        w.edgeAdj.add(new Edge(v,w.path.dist+1));
+        w.edgeAdj.add(new Edge(v,w.scratch+1));
+        System.out.println(w.edgeAdj.get(0).cost);
     }
 
     public void printPath( String destName ) throws NoSuchElementException {
@@ -77,18 +78,70 @@ public class Graph {
             }
         }
     }
-    
-    public void topologicalSort() {
-    	Queue queue = new LinkedList();
-    	int counter = 0;
-    	
-    	Collection<Vertex> vertexSet = vertexMap.values();
-    	for (Vertex v: vertexSet) {
-    		for (Edge e: v.edgeAdj) {
-                if(v.path.dist==0){
-                    queue.add(v);
+    public Queue topRunner(){
+        Queue queue = new LinkedList();
+        Collection<Vertex> vertexSet = vertexMap.values();
+        return topologicalSort(queue,vertexSet);
+    }
+    public Queue topologicalSort(Queue queue, Collection<Vertex> vertexSet) {
+            for (Vertex v : vertexSet) {
+                for (Edge e : v.edgeAdj) {
+                    e.dest.scratch++;
                 }
-    		}
-    	}
+            }
+                for( Vertex v : vertexSet ) {
+                    if( v.scratch == 0 )
+                    queue.add( v );
+                }
+        int iterations;
+                for( iterations = 0; !queue.isEmpty( ); iterations++ )
+             {
+             Vertex v = (Vertex) queue.remove( );
+
+             for( Edge e : v.edgeAdj )
+                 {
+                     Vertex w = e.dest;
+                      double cvw = e.cost;
+
+                      if( --w.scratch == 0 )
+                      queue.add( w );
+
+                      if( v.dist == INFINITY )
+                      continue;
+
+                      if( w.dist > v.dist + cvw )
+                      {
+                      w.dist = (int) (v.dist + cvw);
+                      w.path = v;
+                      }
+                      }
+                  }
+        System.out.println(iterations);
+        System.out.println(vertexMap.size());
+         if( iterations != vertexMap.size( ) ){
+             throw new RuntimeException( "Graph has a cycle!" );
+
+                 }
+
+
+        return queue;
+    }
+
+    public static void main(String[] args) {
+        Graph newGraph = new Graph();
+        CellToken paul = new CellToken();
+        CellToken paul2 = new CellToken();
+        CellToken pablo = new CellToken();
+        Vertex circle = new Vertex(pablo);
+        newGraph.vertexMap.put(0,circle);
+
+
+            Vertex rest= new Vertex(paul);
+            newGraph.vertexMap.put(1,rest);
+            newGraph.addEdge(paul,pablo);
+
+
+        System.out.println(newGraph.topRunner());
+
     }
 }

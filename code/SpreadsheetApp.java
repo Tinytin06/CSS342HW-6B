@@ -131,7 +131,7 @@ public class SpreadsheetApp {
         theSpreadsheet.changeCellFormulaAndRecalculate(cellToken, expTreeTokenStack);
         System.out.println();
     }
-    
+
     /**
      *  Given a CellToken, print it out as it appears on the
      *  spreadsheet (e.g., "A3")

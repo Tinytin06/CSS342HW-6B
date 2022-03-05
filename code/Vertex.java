@@ -4,7 +4,8 @@ import java.util.*;
 import java.io.*;
 
 public class Vertex {
-	 Token      name;   // Vertex name
+	int 		scratch;
+	Token      name;   // Vertex name
 	 List<Vertex> adj;    // Adjacent vertices
 	 int        dist;   // Cost
 	 Vertex     path;   // Previous vertex on shortest path
