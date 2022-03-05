@@ -21,6 +21,8 @@ public class Cell {
 		this.formula = theFormula;
 	}
 
+	public int getValue(){return this.value;}
+
 	public String getFormula() {
 		return this.formula;
 	}

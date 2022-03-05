@@ -57,8 +57,18 @@ public class Spreadsheet {
 	 * 
 	 */
 	public void printValues() {
-		//send to the GUI
-		System.out.println();
+		Object[][] data = new Object[ROW][COLUMN];
+		for (int i = 0; i < getNumRows(); i++) {
+			for (int j = 0; j < getNumColumns(); j++) {
+				if(this.spreadsheetArray[i][j] == null){
+					data[i][j] = null;
+				} else {
+					data[i][j] = spreadsheetArray[i][j].getValue();
+					//TODO-figure out value
+				}
+			}
+		}
+		new JTableRowHeaders(data);
 	}
 	
 	/**
@@ -70,8 +80,17 @@ public class Spreadsheet {
 	}
 	
 	public void printAllFormulas() {
-		// TODO Auto-generated method stub
-		
+		Object[][] data = new Object[ROW][COLUMN];
+		for (int i = 0; i < getNumRows(); i++) {
+			for (int j = 0; j < getNumColumns(); j++) {
+				if(this.spreadsheetArray[i][j] == null){
+					data[i][j] = null;
+				} else {
+					data[i][j] = spreadsheetArray[i][j].getFormula();
+				}
+			}
+		}
+		new JTableRowHeaders(data);
 	}
 
 	/**
