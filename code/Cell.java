@@ -12,8 +12,9 @@ public class Cell {
 	private String formula;
 	private int value;
 
-//	ArrayList<Object> dependsOn;
-//	ArrayList<Object> feedInto;
+	ArrayList<Cell> dependsOn = new ArrayList<>();
+	ArrayList<Cell> feedInto = new ArrayList<>();
+	int        dist;   // Cost
 	// The expression tree below represents the formula
 	private ExpressionTree expressionTree;
 

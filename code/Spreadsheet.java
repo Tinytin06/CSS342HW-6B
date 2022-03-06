@@ -74,6 +74,10 @@ public class Spreadsheet {
 		
 	}
 
+	public Cell[][] getSpreadsheetArray() {
+		return spreadsheetArray;
+	}
+
 	/**
 	 * getCellToken
 	 * 
@@ -195,14 +199,14 @@ public class Spreadsheet {
 	public void changeCellFormulaAndRecalculate(CellToken cellToken, Stack expTreeTokenStack) throws CloneNotSupportedException {
 		Graph graph = new Graph();
 		Stack tokenStack = (Stack) expTreeTokenStack.clone();
-		Token token = new Token();
+		CellToken token = (CellToken) new Token();
 		
 		// Find a way to specifically target cellTokens for topological sort.
 		// A4 --> A2		if A2 has the formula 5+A4
 		while(!tokenStack.isEmpty()) {
-			token = (Token) tokenStack.topAndPop();
+			token = (CellToken) tokenStack.topAndPop();
 			if (token instanceof CellToken) {
-				graph.addEdge(token, cellToken);
+				graph.addEdge(token, cellToken, this.getSpreadsheetArray());
 				System.out.println("Token: " + token);
 			}
 		}
@@ -215,4 +219,5 @@ public class Spreadsheet {
 //		System.out.print("\n" + expTreeTokenStack);
 		eTree.printTree();
 	}
+
 }

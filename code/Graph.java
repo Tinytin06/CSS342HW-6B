@@ -1,19 +1,18 @@
 package homeworkSixB;
 
 import java.util.*;
-import java.io.*;
 
 public class Graph {
 	public static final int INFINITY = Integer.MAX_VALUE;
     private HashMap vertexMap = new HashMap( );    // Maps vertices to internal Vertex
 
-    public void addEdge( Token sourceName, Token destName ) {
-        Vertex v = getVertex( sourceName );
-        Vertex w = getVertex( destName );
-        v.adj.add( w );
-        v.path=w;
-        w.edgeAdj.add(new Edge(v,w.scratch+1));
-        System.out.println(w.edgeAdj.get(0).cost);
+    public void addEdge( CellToken sourceName, CellToken destName, Cell[][] theCellArray ) {
+        Cell sourceNameCell=theCellArray[sourceName.getRow()][sourceName.getColumn()];
+        Cell destNameCell=theCellArray[destName.getRow()][destName.getColumn()];
+        sourceNameCell.feedInto.add(destNameCell);
+        destNameCell.dependsOn.add(sourceNameCell);
+        destNameCell.dist=destNameCell.dependsOn.size();
+
     }
 
     public void printPath( String destName ) throws NoSuchElementException {
@@ -78,70 +77,52 @@ public class Graph {
             }
         }
     }
-    public Queue topRunner(){
-        Queue queue = new LinkedList();
-        Collection<Vertex> vertexSet = vertexMap.values();
-        return topologicalSort(queue,vertexSet);
-    }
-    public Queue topologicalSort(Queue queue, Collection<Vertex> vertexSet) {
-            for (Vertex v : vertexSet) {
-                for (Edge e : v.edgeAdj) {
-                    e.dest.scratch++;
+    //top sorts cell by cell that way we know which cell we can sort out w/o any other cell
+        public void topSort(Spreadsheet theSpreadsheet) {
+            Cell[][] theArr = theSpreadsheet.getSpreadsheetArray();
+            int counter = 0;
+            Queue solveTheseFirst = new LinkedList();
+            for (int i = 0; i < theSpreadsheet.getNumRows(); i++) {
+                for (int j = 0; j < theSpreadsheet.getNumColumns(); j++) {
+                    if(theArr[i][j].dist==0){
+                    solveTheseFirst.add(theArr[i][j]);
+                    }
                 }
             }
-                for( Vertex v : vertexSet ) {
-                    if( v.scratch == 0 )
-                    queue.add( v );
+            while(!solveTheseFirst.isEmpty()){
+                Cell current= (Cell) solveTheseFirst.remove();
+                solve(current);
+                for (Cell c: current.feedInto) {
+                    if (--c.dist == 0) {
+                        solveTheseFirst.add(c);
+                    }
+                    if (counter != theSpreadsheet.getNumColumns() * theSpreadsheet.getNumRows())
+                    throw new RuntimeException("CycleFound");
                 }
-        int iterations;
-                for( iterations = 0; !queue.isEmpty( ); iterations++ )
-             {
-             Vertex v = (Vertex) queue.remove( );
+            }
+        }
+        public void solve(Cell cell){
 
-             for( Edge e : v.edgeAdj )
-                 {
-                     Vertex w = e.dest;
-                      double cvw = e.cost;
+        }
 
-                      if( --w.scratch == 0 )
-                      queue.add( w );
-
-                      if( v.dist == INFINITY )
-                      continue;
-
-                      if( w.dist > v.dist + cvw )
-                      {
-                      w.dist = (int) (v.dist + cvw);
-                      w.path = v;
-                      }
-                      }
-                  }
-        System.out.println(iterations);
-        System.out.println(vertexMap.size());
-         if( iterations != vertexMap.size( ) ){
-             throw new RuntimeException( "Graph has a cycle!" );
-
-                 }
-
-
-        return queue;
-    }
 
     public static void main(String[] args) {
         Graph newGraph = new Graph();
         CellToken paul = new CellToken();
-        CellToken paul2 = new CellToken();
+        Cell[][] paul2 = new Cell[5][5];
+        Cell paulCell = new Cell();
+        paul2[1][1]=paulCell;
         CellToken pablo = new CellToken();
-        Vertex circle = new Vertex(pablo);
-        newGraph.vertexMap.put(0,circle);
-
-
+        Cell pabloCell = new Cell();
+        paul2[0][0]=pabloCell;
+        paul.setColumn(1);
+        paul.setRow(1);
+        pablo.setColumn(0);
+        pablo.setRow(0);
             Vertex rest= new Vertex(paul);
             newGraph.vertexMap.put(1,rest);
-            newGraph.addEdge(paul,pablo);
-
-
-        System.out.println(newGraph.topRunner());
+            newGraph.addEdge(paul,pablo,paul2);
+            newGraph.addEdge(paul,pablo,paul2);
 
     }
 }
