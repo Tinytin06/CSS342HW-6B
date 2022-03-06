@@ -506,7 +506,6 @@ public class SpreadsheetApp {
     }
     
     public static void main(String[] args) throws CloneNotSupportedException {
-        Spreadsheet theSpreadsheet = new Spreadsheet(8);
 
         boolean done = false;
         String command = "";
@@ -514,6 +513,10 @@ public class SpreadsheetApp {
         System.out.println(">>> Welcome to the TCSS 342 Spreadsheet <<<");
         System.out.println();
         System.out.println();
+
+        System.out.println("Enter the size of the spreadsheet: ");
+        String size = readString();
+        Spreadsheet theSpreadsheet = new Spreadsheet(Integer.parseInt(size));
     
         while (!done) {
             System.out.println("Choose from the following commands:");

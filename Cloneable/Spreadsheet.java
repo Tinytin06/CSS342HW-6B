@@ -80,7 +80,7 @@ public class Spreadsheet {
 		Object[][] data = new Object[ROW][COLUMN];
 		for (int i = 0; i < getNumRows(); i++) {
 			for (int j = 0; j < getNumColumns(); j++) {
-				if(this.spreadsheetArray[i][j] == null){
+				if(this.spreadsheetArray[i][j].getValue() == 0){
 					data[i][j] = null;
 				} else {
 					data[i][j] = spreadsheetArray[i][j].getValue();
