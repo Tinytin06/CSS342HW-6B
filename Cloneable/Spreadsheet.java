@@ -5,14 +5,23 @@ public class Spreadsheet {
 	private static int ROW;
 	private static int COLUMN;
 	private Cell[][] spreadsheetArray;
-
+	//private Graph graph = new Graph();
+	//maybe need a counter
+	private static int count;
 	/**
 	 * Default Constructor - sets row and column to 5
 	 */
 	public Spreadsheet() {
+		Cell cell = new Cell();
 		this.ROW= 5;
 		this.COLUMN = 5;
-		spreadsheetArray = new Cell[5][5];
+		spreadsheetArray =  new Cell[this.ROW][this.COLUMN];
+		cell.setValue(0);
+		for (int row = 0; row < this.ROW; row++) {
+			for (int col = 0; col < this.COLUMN; col++) {
+				spreadsheetArray[row][col] = cell;
+			}
+		}
 	}
 
 	/**
@@ -20,9 +29,19 @@ public class Spreadsheet {
 	 * @param theSize - the size of the spreadsheet
 	 */
 	public Spreadsheet(int theSize) {
-		this.ROW= theSize;
+		Cell cell = new Cell();
+		if (theSize <= 0) {
+			throw new IllegalArgumentException("Spreadsheet cannot be less than or equal to 0");
+		}
+		this.ROW = theSize;
 		this.COLUMN = theSize;
-		spreadsheetArray = new Cell[theSize][theSize];
+		spreadsheetArray = new Cell[this.ROW][this.COLUMN];
+		cell.setValue(0);
+		for (int row = 0; row < this.ROW; row++) {
+			for (int col = 0; col < this.COLUMN; col++) {
+				spreadsheetArray[row][col] = cell;
+			}
+		}
 	}
 
 	/**
@@ -34,6 +53,7 @@ public class Spreadsheet {
 	public void addCell(CellToken theCellToken, String theFormula){
 		Cell cell = new Cell();
 		cell.setFormula(theFormula);
+		cell.thisCell = theCellToken;
 		this.spreadsheetArray[theCellToken.getRow()-1][theCellToken.getColumn()] = cell;
 	}
 
@@ -57,8 +77,6 @@ public class Spreadsheet {
 	 * Prints all formulas of spreadsheet into the GUI
 	 */
 	public void printValues() {
-		//need to calculate the value of each cell
-
 		Object[][] data = new Object[ROW][COLUMN];
 		for (int i = 0; i < getNumRows(); i++) {
 			for (int j = 0; j < getNumColumns(); j++) {
@@ -66,13 +84,12 @@ public class Spreadsheet {
 					data[i][j] = null;
 				} else {
 					data[i][j] = spreadsheetArray[i][j].getValue();
-					//TODO-figure out value
 				}
 			}
 		}
 		new JTableRowHeaders(data);
 	}
-	
+
 	/**
 	 * Prints the cell formula to the console
 	 *
@@ -103,6 +120,7 @@ public class Spreadsheet {
 					data[i][j] = null;
 				} else {
 					data[i][j] = spreadsheetArray[i][j].getFormula();
+					System.out.println(spreadsheetArray[i][j].getFormula());
 				}
 			}
 		}
@@ -232,22 +250,25 @@ public class Spreadsheet {
 		Graph graph = new Graph();
 		Stack tokenStack = (Stack) expTreeTokenStack.clone();
 		Token token = new Token();
-		
+		Cell cell = new Cell();
+
 		// Find a way to specifically target cellTokens for topological sort.
 		// A4 --> A2		if A2 has the formula 5+A4
 		while(!tokenStack.isEmpty()) {
 			token = (Token) tokenStack.topAndPop();
 			if (token instanceof CellToken) {
 				graph.addEdge(token, cellToken);
+				graph.addEdge((CellToken) token, cellToken, this.getSpreadsheetArray());
+
 			}
+			graph.topSort(this);
 		}
-		/*while(!expTreeTokenStack.isEmpty()) {
-			cellToken = (CellToken) expTreeTokenStack.top();
-			
-		}*/
 		ExpressionTree eTree = new ExpressionTree(expTreeTokenStack);
-//		System.out.print(tokenStack);
-//		System.out.print("\n" + expTreeTokenStack);
+		this.spreadsheetArray[cellToken.getRow()-1][cellToken.getColumn()].setValue(eTree.Evaluate(this));//austin
 		eTree.printTree();
+	}
+
+	public Cell[][] getSpreadsheetArray() {
+		return this.spreadsheetArray;
 	}
 }

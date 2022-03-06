@@ -11,11 +11,30 @@ import java.util.ArrayList;
 public class Cell {
 	private String formula;
 	private int value;
+	CellToken thisCell=new CellToken();
+	protected int dist;
 
-//	ArrayList<Object> dependsOn;
-//	ArrayList<Object> feedInto;
+	/**
+	 * No-arg constructor that initializes the expressiontree.
+	 */
+	public Cell() {
+		expressionTree = new ExpressionTree();
+		formula = " ";
+		value = 0;
+	}
+	ArrayList<Cell> dependsOn = new ArrayList<>();
+	ArrayList<Cell> feedInto = new ArrayList<>();
+
 	// The expression tree below represents the formula
 	private ExpressionTree expressionTree;
+
+	/**
+	 * Sets the integer value.
+	 * @param theValue to be used to set the value.
+	 */
+	public void setValue(int theValue) {
+		this.value = theValue;
+	}
 
 	public void setFormula(String theFormula) {
 		this.formula = theFormula;
@@ -26,13 +45,14 @@ public class Cell {
 	public String getFormula() {
 		return this.formula;
 	}
-	
-	public Cell() {
-		expressionTree = new ExpressionTree();
-	}
+
 	
 	public void Evaluate(Spreadsheet spreadsheet) {
-		CellToken cellToken = new CellToken();
 		expressionTree = new ExpressionTree();
+		expressionTree.printTree();
+	}
+
+	public ExpressionTree getExpressionTree() {
+		return expressionTree;
 	}
 }
