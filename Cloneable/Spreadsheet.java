@@ -79,7 +79,17 @@ public class Spreadsheet {
 	 * @param theCellToken
 	 */
 	public void printCellFormula(CellToken theCellToken) {
-		System.out.println(spreadsheetArray[theCellToken.getRow()-1][theCellToken.getColumn()].getFormula());
+		try{
+			if (spreadsheetArray[theCellToken.getRow() - 1][theCellToken.getColumn()].getFormula() == null) {
+				System.out.println("NO FORMULA FOUND");
+			} else {
+				System.out.println(spreadsheetArray[theCellToken.getRow() - 1][theCellToken.getColumn()].getFormula());
+			}
+		}catch (NullPointerException e){
+			System.out.println("NO FORMULA FOUND");
+			System.out.println();
+			System.out.println("NullPointerException caught");
+		}
 	}
 
 	/**
@@ -229,7 +239,6 @@ public class Spreadsheet {
 			token = (Token) tokenStack.topAndPop();
 			if (token instanceof CellToken) {
 				graph.addEdge(token, cellToken);
-				System.out.println("Token: " + token);
 			}
 		}
 		/*while(!expTreeTokenStack.isEmpty()) {

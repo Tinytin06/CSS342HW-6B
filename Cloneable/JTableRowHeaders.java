@@ -12,7 +12,8 @@ class JTableRowHeaders extends JFrame{
 	 * @param args
 	 */
 	    public static void main(String[] args){
-	        Object[][] data = {
+	        //test of the GUI
+			Object[][] data = {
 	                { 0,0,0,0,0,0,0,0 },
 	                { 0,0,0,0,0,0,0,0 },
 	                { 0,0,0,0,0,0,0,0 },
@@ -31,7 +32,7 @@ class JTableRowHeaders extends JFrame{
 	        setSize(800, 300);
 
 	        //Set close
-	        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
 	        //puts frame in middle of screen
 	        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
