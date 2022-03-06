@@ -26,9 +26,8 @@ class JTableRowHeaders extends JFrame{
 	        new JTableRowHeaders(data);
 	    }
 
-
 	    public JTableRowHeaders(Object[][] data) {
-	        super("Row Header Example");
+	        super("Spreadsheet");
 	        setSize(800, 300);
 
 	        //Set close
@@ -41,7 +40,12 @@ class JTableRowHeaders extends JFrame{
 	        //MODEL FOR OUR ROW HEADER
 	        ListModel lm = new AbstractListModel() {
 	            //Header text we want displayed
-	            String[] headers = {"1", "2", "3", "4", "5", "6", "7", "8"};
+	            String[] headers = {"1", "2", "3", "4", "5", "6", "7", "8", "9","10",
+									"11","12", "13", "14", "15", "16", "17", "18", "19","20",
+									"21", "22", "23", "24", "25", "26", "27", "28", "29","30",
+									"31", "32", "33", "34", "35", "36", "37", "38", "39","40",
+									"41", "42", "43", "44", "45", "46", "47", "48", "49","50"
+				};
 
 	            @Override
 	            public int getSize() {
@@ -54,10 +58,11 @@ class JTableRowHeaders extends JFrame{
 	            }
 	        };
 
-	        DefaultTableModel dm = new DefaultTableModel(lm.getSize(), 10);
+	        DefaultTableModel dm = new DefaultTableModel(lm.getSize(), 50);
 	        JTable table = new JTable(dm);
 	        table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
+			//sets data from given array into GUI
 	        for (int i = 0; i < data.length; i++) {
 	            for (int j = 0; j < data[0].length; j++) {
 	                table.getModel().setValueAt(data[i][j], i, j);
@@ -76,6 +81,7 @@ class JTableRowHeaders extends JFrame{
 	        JScrollPane pane = new JScrollPane(table);
 	        pane.setRowHeaderView(rowHeader);
 	        getContentPane().add(pane, BorderLayout.CENTER);
+
 
 	        //Set Visible
 	        this.setVisible(true);

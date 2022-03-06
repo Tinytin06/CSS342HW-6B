@@ -66,7 +66,6 @@ public class ExpressionTree {
 			ExpressionTreeNode leftSubtree = GetExpressionTree(theStack);
 			returnTree = 
 					new ExpressionTreeNode(token, leftSubtree, rightSubtree);
-			System.out.println(returnTree);
 			return returnTree;
 		} else {
 			returnTree = new ExpressionTreeNode();

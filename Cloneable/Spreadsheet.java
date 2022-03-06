@@ -54,9 +54,11 @@ public class Spreadsheet {
 	}
 
 	/**
-	 * 
+	 * Prints all formulas of spreadsheet into the GUI
 	 */
 	public void printValues() {
+		//need to calculate the value of each cell
+
 		Object[][] data = new Object[ROW][COLUMN];
 		for (int i = 0; i < getNumRows(); i++) {
 			for (int j = 0; j < getNumColumns(); j++) {
@@ -72,13 +74,17 @@ public class Spreadsheet {
 	}
 	
 	/**
-	 * 
+	 * Prints the cell formula to the console
+	 *
 	 * @param theCellToken
 	 */
 	public void printCellFormula(CellToken theCellToken) {
 		System.out.println(spreadsheetArray[theCellToken.getRow()-1][theCellToken.getColumn()].getFormula());
 	}
-	
+
+	/**
+	 * Prints all formulas of spreadsheet into the GUI
+	 */
 	public void printAllFormulas() {
 		Object[][] data = new Object[ROW][COLUMN];
 		for (int i = 0; i < getNumRows(); i++) {
@@ -206,7 +212,8 @@ public class Spreadsheet {
 	}
 	
 	/**
-	 * 
+	 * This method is used to calculate the topological sort
+	 *
 	 * @param cellToken
 	 * @param expTreeTokenStack
 	 * @throws CloneNotSupportedException 
