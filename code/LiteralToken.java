@@ -21,9 +21,9 @@ public class LiteralToken extends Token {
 	}
 	
 	// TODO: DELETE
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(getValue() + "\n");
-		return sb.toString();
-	}
+//	public String toString() {
+//		StringBuilder sb = new StringBuilder();
+//		sb.append(getValue() + "\n");
+//		return sb.toString();
+//	}
 }

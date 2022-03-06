@@ -22,9 +22,9 @@ public class ExpressionTreeNode {
 	}
 	
 	// TODO: DELETE
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(token);
-		return sb.toString();
-	}
+//	public String toString() {
+//		StringBuilder sb = new StringBuilder();
+//		sb.append(token);
+//		return sb.toString();
+//	}
 }

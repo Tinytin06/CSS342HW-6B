@@ -59,7 +59,7 @@ public class SpreadsheetApp {
         inputString = readString();
         getCellToken(inputString, 0, cellToken);
     
-        System.out.println(printCellToken(cellToken)); // cellID? or cellToken?
+        System.out.println(printCellToken(cellToken));
         System.out.println(": ");
     
         if ((cellToken.getRow() < 0) ||
@@ -113,9 +113,8 @@ public class SpreadsheetApp {
     
         System.out.println("Enter the cell's new formula: ");
         inputFormula = readString();
-        theSpreadsheet.addCell(cellToken,inputFormula);
+        theSpreadsheet.addCell(cellToken, inputFormula); // Added new method to add in a cell.
         expTreeTokenStack = getFormula(inputFormula);
-
     
         // This code prints out the expression stack from
         // top to bottom (that is, reverse of postfix).
@@ -131,7 +130,7 @@ public class SpreadsheetApp {
         theSpreadsheet.changeCellFormulaAndRecalculate(cellToken, expTreeTokenStack);
         System.out.println();
     }
-
+    
     /**
      *  Given a CellToken, print it out as it appears on the
      *  spreadsheet (e.g., "A3")
@@ -506,7 +505,7 @@ public class SpreadsheetApp {
     }
     
     public static void main(String[] args) throws CloneNotSupportedException {
-        Spreadsheet theSpreadsheet = new Spreadsheet(8);
+        Spreadsheet theSpreadsheet = new Spreadsheet(30);
 
         boolean done = false;
         String command = "";

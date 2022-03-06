@@ -11,7 +11,9 @@ public class CellToken extends Token {
 	private int column;
 	private int row;
 	
-	public CellToken() {}
+	public CellToken() {
+		
+	}
 	
 	/**
 	 * Gets the column.
@@ -44,7 +46,6 @@ public class CellToken extends Token {
 	public void setRow(int theRow) {
 		this.row = theRow;
 	}
-
 	
 	//TODO: DELETE
 	public String toString() {

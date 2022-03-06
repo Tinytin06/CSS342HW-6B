@@ -57,9 +57,9 @@ public class OperatorToken extends Token {
 	}
 	
 	// TODO: DELETES
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(getOperatorToken() + "\n");
-		return sb.toString();
-	}
+//	public String toString() {
+//		StringBuilder sb = new StringBuilder();
+//		sb.append(getOperatorToken() + "\n");
+//		return sb.toString();
+//	}
 }

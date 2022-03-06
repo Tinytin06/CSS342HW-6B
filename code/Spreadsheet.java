@@ -2,80 +2,152 @@ package homeworkSixB;
 
 public class Spreadsheet {
 	private static final int BadCell = -1;
-	private static int ROW;
-	private static int COLUMN;
+	private int myRow;
+	private int myColumn;
 	private Cell[][] spreadsheetArray;
-
+	
 	/**
-	 * Default Constructor - sets row and column to 5
+	 * No-arg constructor with default spreadsheet size of 5.
 	 */
 	public Spreadsheet() {
-		this.ROW= 5;
-		this.COLUMN = 5;
-		spreadsheetArray = new Cell[5][5];
+		Cell cell = new Cell();
+		this.myRow = 5;
+		this.myColumn = 5;
+		spreadsheetArray = new Cell[this.myRow][this.myColumn];
+		cell.setValue(0);
+		for (int row = 0; row < this.myRow; row++) {
+			for (int col = 0; col < this.myColumn; col++) {
+				spreadsheetArray[row][col] = cell;
+			}
+		}
 	}
-
+	
 	/**
-	 * Overloaded Constructor - sets row and column to parameter
-	 * @param theSize - the size of the spreadsheet
+	 * Parameterized constructor that allows for the spreadsheet
+	 * to be a different size.
+	 * @param theSize the size of the spreadsheet
 	 */
 	public Spreadsheet(int theSize) {
-		this.ROW= theSize;
-		this.COLUMN = theSize;
-		spreadsheetArray = new Cell[theSize][theSize];
+		Cell cell = new Cell();
+		if (theSize <= 0) {
+			throw new IllegalArgumentException("Spreadsheet cannot be less than or equal to 0");
+		}
+		this.myRow = theSize;
+		this.myColumn = theSize;
+		spreadsheetArray = new Cell[this.myRow][this.myColumn];
+		cell.setValue(0);
+		for (int row = 0; row < this.myRow; row++) {
+			for (int col = 0; col < this.myColumn; col++) {
+				spreadsheetArray[row][col] = cell;
+			}
+		}
+	}
+	
+	/**
+	 * Gets the number of rows of the spreadsheet.
+	 * @return the number of rows of the spreadsheet. 
+	 */
+	public int getNumRows() {
+		return this.myRow;
+	}
+	
+	/**
+	 * Gets the number of columns of the spreadsheet.
+	 * @return the number of columns of the spreadsheet.
+	 */
+	public int getNumColumns() {
+		return this.myColumn;
 	}
 
 	/**
-	 * Add cell to the spreadsheet
-	 *
+	 * Gets the 2d spreadsheet array.
+	 * @return the 2d spreadsheet array.
+	 */
+	public Cell[][] getSpreadsheetArray() {
+		return this.spreadsheetArray;
+	}
+	
+	/**
+	 * Add cell to the spreadsheet.
+	 * 
 	 * @param theCellToken
 	 * @param theFormula
 	 */
-	public void addCell(CellToken theCellToken, String theFormula){
+	public void addCell(CellToken theCellToken, String theFormula) {
 		Cell cell = new Cell();
 		cell.setFormula(theFormula);
+		System.out.println(theCellToken);
+		cell.thisCell = theCellToken;
 		this.spreadsheetArray[theCellToken.getRow()-1][theCellToken.getColumn()] = cell;
 	}
 
-
 	/**
-	 * @return ROW - the Row size
-	 */
-	public int getNumRows() {
-		return ROW;
-	}
-	
-	/**
-	 * 
-	 * @return COLUMN - the Column size
-	 */
-	public int getNumColumns() {
-		return COLUMN;
-	}
-
-	/**
+	 * Prints all the values in the spreadsheet.
+	 * Does not include 0.
 	 * 
 	 */
 	public void printValues() {
-		//send to the GUI
-		System.out.println();
+		for (int row = 1; row < spreadsheetArray.length; row++) {
+			for (int col = 0; col < spreadsheetArray[row-1].length; col++) {
+				if (spreadsheetArray[row-1][col] != null && spreadsheetArray[row-1][col].getValue() != 0) {
+					System.out.println(spreadsheetArray[row-1][col].getValue());
+				}
+			}
+		}
+//		Object[][] data = new Object[this.myRow][this.myColumn];
+//		for (int i = 0; i < getNumRows(); i++) {
+//			for (int j = 0; j < getNumColumns(); j++) {
+//				if(this.spreadsheetArray[i][j] == null){
+//					data[i][j] = null;
+//				} else {
+//					data[i][j] = spreadsheetArray[i][j].getValue();
+//					System.out.println(spreadsheetArray[i][j].getValue());
+//				}
+//			}
+//		}
 	}
 	
 	/**
-	 * 
-	 * @param theCellToken
+	 * Prints out the formula of the cell (ex. 5+A2)
+	 * @param cellToken the cell token to be printed.
 	 */
 	public void printCellFormula(CellToken theCellToken) {
-		System.out.println(spreadsheetArray[theCellToken.getRow()-1][theCellToken.getColumn()].getFormula());
+		try {
+			if (spreadsheetArray[theCellToken.getRow() - 1][theCellToken.getColumn()].getFormula() == null) {
+				System.out.println("NO FORMULA FOUND");
+			} else {
+				System.out.println(spreadsheetArray[theCellToken.getRow() - 1][theCellToken.getColumn()].getFormula());
+			}
+		} catch (NullPointerException e) {
+			System.out.println("NO FORMULA FOUND");
+			System.out.println();
+			System.out.println("NullPointerException caught");
+		}
 	}
 	
+	/**
+	 * Prints all the formula in the spreadsheet.
+	 */
 	public void printAllFormulas() {
-		// TODO Auto-generated method stub
+		for (int row = 1; row < spreadsheetArray.length; row++) {
+			for (int col = 0; col < spreadsheetArray[row-1].length; col++) {
+				if (spreadsheetArray[row-1][col] != null && spreadsheetArray[row-1][col].getValue() != 0) {
+					System.out.println(spreadsheetArray[row-1][col].getFormula());
+				}
+			}
+		}
+//		Object[][] data = new Object[this.myRow][this.myColumn];
+//		for (int i = 0; i < getNumRows(); i++) {
+//			for (int j = 0; j < getNumColumns(); j++) {
+//				if(this.spreadsheetArray[i][j] == null){
+//					data[i][j] = null;
+//				} else {
+//					data[i][j] = spreadsheetArray[i][j].getFormula();
+//					System.out.println(spreadsheetArray[i][j].getFormula());
+//				}
+//			}
+//		}
 		
-	}
-
-	public Cell[][] getSpreadsheetArray() {
-		return spreadsheetArray;
 	}
 
 	/**
@@ -191,33 +263,34 @@ public class Spreadsheet {
 	}
 	
 	/**
+	 * Changes the cell formula in the cell based on user inputs,
+	 * then calculates the formula.
 	 * 
-	 * @param cellToken
-	 * @param expTreeTokenStack
-	 * @throws CloneNotSupportedException 
+	 * @param cellToken to be added into the cell.
+	 * @param expTreeTokenStack the stacks of tokens to be calculated.
+	 * @throws CloneNotSupportedException if cloning is not supported.
 	 */
 	public void changeCellFormulaAndRecalculate(CellToken cellToken, Stack expTreeTokenStack) throws CloneNotSupportedException {
-		Graph graph = new Graph();
+		Graph graph = new Graph(expTreeTokenStack);
 		Stack tokenStack = (Stack) expTreeTokenStack.clone();
-		CellToken token = (CellToken) new Token();
+		Token token = new Token();
+		Cell cell = new Cell();
 		
 		// Find a way to specifically target cellTokens for topological sort.
 		// A4 --> A2		if A2 has the formula 5+A4
 		while(!tokenStack.isEmpty()) {
-			token = (CellToken) tokenStack.topAndPop();
+			token = (Token) tokenStack.topAndPop();
 			if (token instanceof CellToken) {
-				graph.addEdge(token, cellToken, this.getSpreadsheetArray());
-				System.out.println("Token: " + token);
+				graph.addEdge((CellToken) token, cellToken, this.getSpreadsheetArray());
 			}
+			graph.topSort(this);
 		}
+		ExpressionTree eTree = new ExpressionTree(expTreeTokenStack);
+		cell.setValue(eTree.Evaluate(this));
+		spreadsheetArray[cellToken.getRow()-1][cellToken.getColumn()] = cell;
 		/*while(!expTreeTokenStack.isEmpty()) {
 			cellToken = (CellToken) expTreeTokenStack.top();
 			
 		}*/
-		ExpressionTree eTree = new ExpressionTree(expTreeTokenStack);
-//		System.out.print(tokenStack);
-//		System.out.print("\n" + expTreeTokenStack);
-		eTree.printTree();
 	}
-
 }

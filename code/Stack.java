@@ -5,7 +5,7 @@ import java.util.EmptyStackException;
 
 public class Stack implements Cloneable {
 	/** Stack stored in array */
-	private Object[] theStack;
+	private Object[] myStack;
 	/** Index of the next available spot in the array. */
 	private int topOfStack; 
 	
@@ -13,7 +13,7 @@ public class Stack implements Cloneable {
 	 * 
 	 */
 	public Stack() {
-		this.theStack = new Object[10];
+		this.myStack = new Object[10];
 		this.topOfStack = -1;
 	}
 	
@@ -45,7 +45,7 @@ public class Stack implements Cloneable {
 		if (isEmpty()) {
 			throw new EmptyStackException();
 		} else {
-			return theStack[topOfStack];
+			return myStack[topOfStack];
 		}
 	}
 	
@@ -68,15 +68,15 @@ public class Stack implements Cloneable {
 	 * @param x the new item to be added.
 	 */
 	public void push(Object item) {
-		if (topOfStack + 1 == theStack.length) {
-			Object[] newStack = new Object[theStack.length * 2];
+		if (topOfStack + 1 == myStack.length) {
+			Object[] newStack = new Object[myStack.length * 2];
 			
-			for (int i = 0; i < theStack.length; i++) {
-				newStack[i] = theStack[i];
+			for (int i = 0; i < myStack.length; i++) {
+				newStack[i] = myStack[i];
 			}
-			theStack = newStack;
+			myStack = newStack;
 		}
-		theStack[++topOfStack] = item;
+		myStack[++topOfStack] = item;
 	}
 	
 	/**
@@ -89,7 +89,7 @@ public class Stack implements Cloneable {
 		if (isEmpty()) {
 			throw new EmptyStackException();
 		} else {
-			return theStack[topOfStack--];
+			return myStack[topOfStack--];
 		}
 	}
 	
@@ -99,14 +99,14 @@ public class Stack implements Cloneable {
 	}
 	
 	// TODO: DELETE
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-//		while(!isEmpty()) {
-//			sb.append(topAndPop());
+//	public String toString() {
+//		StringBuilder sb = new StringBuilder();
+////		while(!isEmpty()) {
+////			sb.append(topAndPop());
+////		}
+//		for (int i = 0; i < topOfStack; i++) {
+//			sb.append(myStack[i]);
 //		}
-		for (int i = 0; i < topOfStack; i++) {
-			sb.append(theStack[i]);
-		}
-		return sb.toString();
-	}
+//		return sb.toString();
+//	}
 }
