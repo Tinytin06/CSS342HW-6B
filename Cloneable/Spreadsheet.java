@@ -5,6 +5,7 @@ public class Spreadsheet {
 	private static int ROW;
 	private static int COLUMN;
 	private Cell[][] spreadsheetArray;
+
 	/**
 	 * Default Constructor - sets row and column to 5
 	 */
@@ -50,7 +51,7 @@ public class Spreadsheet {
 	public void addCell(CellToken theCellToken, String theFormula){
 		Cell cell = new Cell();
 		cell.setFormula(theFormula);
-		cell.setThisCell(theCellToken);
+		cell.thisCell = theCellToken;
 		this.spreadsheetArray[theCellToken.getRow()-1][theCellToken.getColumn()] = cell;
 	}
 
@@ -74,8 +75,10 @@ public class Spreadsheet {
 	 * Prints all formulas of spreadsheet into the GUI
 	 */
 	public void printValues() {
-		//recalc all values
-		recalcAll();
+		//recalc all values - exhaustive case
+		for (int i = 0; i < ROW; i++) {
+			recalcAll();
+		}
 
 		Object[][] data = new Object[ROW][COLUMN];
 		for (int i = 0; i < getNumRows(); i++) {
@@ -87,7 +90,7 @@ public class Spreadsheet {
 				}
 			}
 		}
-		new JTableRowHeaders(data);
+		new JTableRowHeaders(data,COLUMN);
 	}
 
 	/**
@@ -124,7 +127,7 @@ public class Spreadsheet {
 				}
 			}
 		}
-		new JTableRowHeaders(data);
+		new JTableRowHeaders(data,COLUMN);
 	}
 
 	/**
@@ -261,15 +264,23 @@ public class Spreadsheet {
 				graph.addEdge((CellToken) token, cellToken, this.getSpreadsheetArray());
 
 			}
-			graph.topSort(this);
 		}
-
+		graph.topSort(this);
+		ExpressionTree eTree = new ExpressionTree(expTreeTokenStack);
+		this.spreadsheetArray[cellToken.getRow()-1][cellToken.getColumn()].setValue(eTree.Evaluate(this));//austin
+		//eTree.printTree();
 	}
 
+	/**
+	 * @return - Returns the 2D Array of cells
+	 */
 	public Cell[][] getSpreadsheetArray() {
 		return this.spreadsheetArray;
 	}
 
+	/**
+	 * Recalculate each individual cell to check if formulas/values are correct
+	 */
 	public void recalcAll(){
 		for (int i = 0; i < getNumRows(); i++) {
 			for (int j = 0; j < getNumColumns(); j++) {
@@ -288,7 +299,6 @@ public class Spreadsheet {
 				}
 			}
 		}
-
 	}
 
 	/**
@@ -321,7 +331,7 @@ public class Spreadsheet {
 		CellToken cellToken;
 		int column = 0;
 		int row = 0;
-
+		boolean negate=false;
 		int index = 0;  // index into formula
 		Stack operatorStack = new Stack();  // stack of operators
 
@@ -375,6 +385,15 @@ public class Spreadsheet {
 				}
 				// push the operator on the operator stack
 				operatorStack.push(new OperatorToken(ch));
+				if(isOperator(formula.charAt(index+1))){
+
+					if(formula.charAt(index+1)==OperatorToken.Minus){
+						negate=true;
+						index++;
+						System.out.println(returnStack);
+					}
+
+				}
 
 				index++;
 
@@ -404,8 +423,12 @@ public class Spreadsheet {
 					}
 				}
 				// place the literal on the output stack
-				returnStack.push(new LiteralToken(literalValue));
-
+				if(negate==true) {
+					returnStack.push(new LiteralToken(-literalValue));
+					negate=false;
+				}else{
+					returnStack.push(new LiteralToken(literalValue));
+				}
 			} else if (Character.isUpperCase(ch)) {
 				// We found a cell reference token
 				cellToken = new CellToken();
@@ -414,6 +437,7 @@ public class Spreadsheet {
 					error = true;
 					break;
 				} else {
+
 					// place the cell reference on the output stack
 					returnStack.push(cellToken);
 				}

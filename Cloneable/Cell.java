@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class Cell {
 	private String formula;
 	private int value;
-	private CellToken thisCell=new CellToken();
+	CellToken thisCell=new CellToken();
 	protected int dist;
 
 	/**
@@ -46,14 +46,7 @@ public class Cell {
 		return this.formula;
 	}
 
-	public CellToken getThisCell() {
-		return thisCell;
-	}
-
-	public void setThisCell(CellToken thisCell) {
-		this.thisCell = thisCell;
-	}
-
+	
 	public void Evaluate(Spreadsheet spreadsheet) {
 		expressionTree = new ExpressionTree();
 		expressionTree.printTree();

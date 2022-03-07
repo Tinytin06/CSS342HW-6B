@@ -19,13 +19,13 @@ public class Graph {
         v.adj.add( w );
     }
     public void addEdge( CellToken sourceName, CellToken destName, Cell[][] theCellArray ) {
-        Cell sourceNameCell = theCellArray[sourceName.getRow()][sourceName.getColumn()];
-        Cell destNameCell = theCellArray[destName.getRow()][destName.getColumn()];
+        Cell sourceNameCell = theCellArray[sourceName.getRow()-1][sourceName.getColumn()];
+        Cell destNameCell = theCellArray[destName.getRow()-1][destName.getColumn()];
         sourceNameCell.feedInto.add(destNameCell);
         destNameCell.dependsOn.add(sourceNameCell);
         destNameCell.dist = destNameCell.dependsOn.size();
-        System.out.println("Source name: " + sourceNameCell);
-        System.out.println("Destination name " + destNameCell);
+        //System.out.println("Source name: " + sourceNameCell.getFormula());
+        //System.out.println("Destination name " + destNameCell.getFormula());
     }
 
     public void printPath( String destName ) throws NoSuchElementException {
@@ -94,33 +94,45 @@ public class Graph {
     public void topSort(Spreadsheet theSpreadsheet) {
         Cell[][] theArr = theSpreadsheet.getSpreadsheetArray();
         int counter = 0;
-        int secondCounter=0;
+        int secondCounter = 0;
         Queue solveTheseFirst = new LinkedList();
         for (int i = 0; i < theSpreadsheet.getNumRows(); i++) {
             for (int j = 0; j < theSpreadsheet.getNumColumns(); j++) {
+                secondCounter++;
                 if (theArr[i][j].dist == 0) {
                     solveTheseFirst.add(theArr[i][j]);
-                    secondCounter++;
                 }
             }
         }
+        //int queueSize = 0;
         while(!solveTheseFirst.isEmpty()){
-            Cell current= (Cell) solveTheseFirst.remove();
+            Cell current = (Cell) solveTheseFirst.remove();
+            //System.out.println(current.getFormula());
+            counter++;
             solve(current,theSpreadsheet);
             for (Cell c: current.feedInto) {
+
                 if (--c.dist == 0) {
                     solveTheseFirst.add(c);
-                    secondCounter++;
-                }
-               if (counter != secondCounter) {
-              	throw new RuntimeException("CycleFound");
                 }
             }
+        }
+
+        if (counter != secondCounter) {
+            System.out.println(counter);
+            System.out.println(secondCounter);
+            throw new RuntimeException("CycleFound");
         }
     }
 
+    /**
+     * Solves the cell and gets the cell value
+     *
+     * @param cell
+     * @param theSpreadsheet
+     */
     public void solve(Cell cell,Spreadsheet theSpreadsheet) {
-        cell.getThisCell().getValue();
+        cell.thisCell.getValue();
     }
 
 }

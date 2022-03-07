@@ -66,7 +66,7 @@ public class ExpressionTree {
 		if (root.token instanceof CellToken) {
 			cellToken = (CellToken) root.token;
 			root.token.setValue(spreadsheet.getSpreadsheetArray()[cellToken.getRow()-1][cellToken.getColumn()].getValue());
-			System.out.println("Root: " + root.token.getValue());
+			//System.out.println("Root: " + root.token.getValue());
 
 		}
 
@@ -75,11 +75,30 @@ public class ExpressionTree {
 		// The total is placed at the root.
 		if (root.token instanceof OperatorToken) {
 			opToken = (OperatorToken) root.token;
+
+
 			if (opToken.getOperatorToken() == OperatorToken.Plus) {
 				root.token.setValue(root.left.token.getValue() + root.right.token.getValue());
 			}
 			if (opToken.getOperatorToken() == OperatorToken.Minus) {
-				root.token.setValue(root.left.token.getValue() - root.right.token.getValue());
+				if(root.right.token instanceof OperatorToken){
+					if(((OperatorToken) root.right.token).getOperatorToken()==OperatorToken.Minus){
+						root.token.setValue(root.left.token.getValue() + root.right.right.token.getValue());
+						try{
+							root.token.setValue(root.left.token.getValue() - root.right.token.getValue());
+						} catch (NullPointerException e){
+							root.token.setValue(-1 * root.right.token.getValue());
+						}
+					}else {
+						throw new IllegalArgumentException("Bad Cell");
+					}
+				} else{
+					try{
+						root.token.setValue(root.left.token.getValue() - root.right.token.getValue());
+					} catch (NullPointerException e){
+						root.token.setValue(-1 * root.right.token.getValue());
+					}
+				}
 			}
 			if (opToken.getOperatorToken() == OperatorToken.Mult) {
 				root.token.setValue(root.left.token.getValue() * root.right.token.getValue());
@@ -141,7 +160,8 @@ public class ExpressionTree {
 			// right subtree and left subtree.
 			ExpressionTreeNode rightSubtree = GetExpressionTree(theStack);
 			ExpressionTreeNode leftSubtree = GetExpressionTree(theStack);
-			returnTree = new ExpressionTreeNode(token, leftSubtree, rightSubtree);
+			returnTree =
+					new ExpressionTreeNode(token, leftSubtree, rightSubtree);
 			return returnTree;
 		}
 		return null;
