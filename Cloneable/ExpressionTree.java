@@ -66,7 +66,7 @@ public class ExpressionTree {
 		if (root.token instanceof CellToken) {
 			cellToken = (CellToken) root.token;
 			root.token.setValue(spreadsheet.getSpreadsheetArray()[cellToken.getRow()-1][cellToken.getColumn()].getValue());
-			System.out.println("Root: " + root.token.getValue());
+			//System.out.println("Root: " + root.token.getValue());
 
 		}
 

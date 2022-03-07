@@ -24,10 +24,10 @@ class JTableRowHeaders extends JFrame{
 	                { 0,0,0,0,0,0,0,0 }
 	        };
 
-	        new JTableRowHeaders(data);
+	        new JTableRowHeaders(data,10);
 	    }
 
-	    public JTableRowHeaders(Object[][] data) {
+	    public JTableRowHeaders(Object[][] data, int column) {
 	        super("Spreadsheet");
 	        setSize(800, 300);
 
@@ -59,7 +59,7 @@ class JTableRowHeaders extends JFrame{
 	            }
 	        };
 
-	        DefaultTableModel dm = new DefaultTableModel(lm.getSize(), 50);
+	        DefaultTableModel dm = new DefaultTableModel(lm.getSize(), column);
 	        JTable table = new JTable(dm);
 	        table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 

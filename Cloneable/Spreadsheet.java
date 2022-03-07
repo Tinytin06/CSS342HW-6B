@@ -5,6 +5,7 @@ public class Spreadsheet {
 	private static int ROW;
 	private static int COLUMN;
 	private Cell[][] spreadsheetArray;
+
 	/**
 	 * Default Constructor - sets row and column to 5
 	 */
@@ -74,7 +75,7 @@ public class Spreadsheet {
 	 * Prints all formulas of spreadsheet into the GUI
 	 */
 	public void printValues() {
-		//recalc all values
+		//recalc all values - exhaustive case
 		for (int i = 0; i < ROW; i++) {
 			recalcAll();
 		}
@@ -89,7 +90,7 @@ public class Spreadsheet {
 				}
 			}
 		}
-		new JTableRowHeaders(data);
+		new JTableRowHeaders(data,COLUMN);
 	}
 
 	/**
@@ -126,7 +127,7 @@ public class Spreadsheet {
 				}
 			}
 		}
-		new JTableRowHeaders(data);
+		new JTableRowHeaders(data,COLUMN);
 	}
 
 	/**
@@ -270,10 +271,16 @@ public class Spreadsheet {
 		//eTree.printTree();
 	}
 
+	/**
+	 * @return - Returns the 2D Array of cells
+	 */
 	public Cell[][] getSpreadsheetArray() {
 		return this.spreadsheetArray;
 	}
 
+	/**
+	 * Recalculate each individual cell to check if formulas/values are correct
+	 */
 	public void recalcAll(){
 		for (int i = 0; i < getNumRows(); i++) {
 			for (int j = 0; j < getNumColumns(); j++) {
@@ -292,7 +299,6 @@ public class Spreadsheet {
 				}
 			}
 		}
-
 	}
 
 	/**
