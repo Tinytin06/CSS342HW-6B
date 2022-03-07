@@ -27,6 +27,12 @@ class JTableRowHeaders extends JFrame{
 	        new JTableRowHeaders(data,10);
 	    }
 
+	/**
+	 * Constructor for the spreadsheet
+	 *
+	 * @param data
+	 * @param column
+	 */
 	    public JTableRowHeaders(Object[][] data, int column) {
 	        super("Spreadsheet");
 	        setSize(800, 300);
@@ -90,7 +96,9 @@ class JTableRowHeaders extends JFrame{
 	    }
 	}
 
-	//RendererClass
+	/**
+ 	* Creates the row headers of the Spreadsheet
+ 	*/
 	class RowRenderer extends JLabel implements ListCellRenderer{
 
 	    //Constructor
