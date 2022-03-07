@@ -3,21 +3,41 @@ package homeworkSixB;
 import java.util.*;
 
 public class Graph {
+    /**
+     * MAX VALUE OF INTEGER
+     */
     public static final int INFINITY = Integer.MAX_VALUE;
-    private Stack myStack;
-    private HashMap vertexMap = new HashMap( );    // Maps vertices to internal Vertex
 
+    /**
+     * Maps vertices to internal Vertex
+     */
+    private HashMap vertexMap = new HashMap( );
+
+    /**
+     * Constructor for the Graph class
+     */
     public Graph(){}
 
-    public Graph(Stack theStack) {
-        this.myStack = theStack;
-    }
 
+    /**
+     * Add Edge between a source token and a destination token if dependency exists
+     * using a Vertices
+     *
+     * @param sourceName
+     * @param destName
+     */
     public void addEdge( Token sourceName, Token destName ) {
         Vertex v = getVertex( sourceName );
         Vertex w = getVertex( destName );
         v.adj.add( w );
     }
+
+    /**
+     * Add Edge between a source token and a destination token if dependency exists
+     * @param sourceName
+     * @param destName
+     * @param theCellArray
+     */
     public void addEdge( CellToken sourceName, CellToken destName, Cell[][] theCellArray ) {
         Cell sourceNameCell = theCellArray[sourceName.getRow()-1][sourceName.getColumn()];
         Cell destNameCell = theCellArray[destName.getRow()-1][destName.getColumn()];
@@ -28,21 +48,13 @@ public class Graph {
         //System.out.println("Destination name " + destNameCell.getFormula());
     }
 
-    public void printPath( String destName ) throws NoSuchElementException {
-        Vertex w = (Vertex) vertexMap.get( destName );
-        if( w == null )
-            throw new NoSuchElementException( "Destination vertex not found" );
-        else if( w.dist == INFINITY )
-            System.out.println( destName + " is unreachable" );
-        else
-        {
-            printPath( w );
-            System.out.println( );
-        }
-    }
-
-    // If vertexName is not present, add it to vertexMap.
-    // In either case, return the Vertex.
+    /**
+     * If vertexName is not present, add it to vertexMap.
+     * In either case, return the Vertex.
+     *
+     * @param destName
+     * @return
+     */
     private Vertex getVertex( Token destName ) {
         Vertex v = (Vertex) vertexMap.get( destName );
         if( v == null )
@@ -53,6 +65,10 @@ public class Graph {
         return v;
     }
 
+    /**
+     * Prints path of vertex
+     * @param dest
+     */
     private void printPath( Vertex dest ) {
         if( dest.path != null )
         {
@@ -62,35 +78,11 @@ public class Graph {
         System.out.print( dest.name );
     }
 
-    private void clearAll( ) {
-        for( Iterator itr = vertexMap.values( ).iterator( ); itr.hasNext( ); )
-            ( (Vertex)itr.next( ) ).reset( );
-    }
 
-    public void unweighted( String startName ) throws NoSuchElementException {
-        clearAll( );
-
-        Vertex start = (Vertex) vertexMap.get( startName );
-        if( start == null )
-            throw new NoSuchElementException( "Start vertex not found" );
-
-        LinkedList q = new LinkedList( );
-        q.addLast( start ); start.dist = 0;
-
-        while( !q.isEmpty( ) ) {
-            Vertex v = (Vertex) q.removeFirst( );
-
-            for( Iterator itr = v.adj.iterator( ); itr.hasNext( ); ) {
-                Vertex w = (Vertex) itr.next( );
-                if( w.dist == INFINITY ) {
-                    w.dist = v.dist + 1;
-                    w.path = v;
-                    q.addLast( w );
-                }
-            }
-        }
-    }
-    //top sorts cell by cell that way we know which cell we can sort out w/o any other cell
+    /**
+     * Top sorts cell by cell that way we know which cell we can sort out w/o any other cell
+     * @param theSpreadsheet
+     */
     public void topSort(Spreadsheet theSpreadsheet) {
         Cell[][] theArr = theSpreadsheet.getSpreadsheetArray();
         int counter = 0;
