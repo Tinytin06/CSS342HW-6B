@@ -19,13 +19,13 @@ public class Graph {
         v.adj.add( w );
     }
     public void addEdge( CellToken sourceName, CellToken destName, Cell[][] theCellArray ) {
-        Cell sourceNameCell = theCellArray[sourceName.getRow()][sourceName.getColumn()];
-        Cell destNameCell = theCellArray[destName.getRow()][destName.getColumn()];
+        Cell sourceNameCell = theCellArray[sourceName.getRow()-1][sourceName.getColumn()];
+        Cell destNameCell = theCellArray[destName.getRow()-1][destName.getColumn()];
         sourceNameCell.feedInto.add(destNameCell);
         destNameCell.dependsOn.add(sourceNameCell);
         destNameCell.dist = destNameCell.dependsOn.size();
-        //System.out.println("Source name: " + sourceNameCell);
-        //System.out.println("Destination name " + destNameCell);
+        //System.out.println("Source name: " + sourceNameCell.getFormula());
+        //System.out.println("Destination name " + destNameCell.getFormula());
     }
 
     public void printPath( String destName ) throws NoSuchElementException {
@@ -122,6 +122,12 @@ public class Graph {
         }
     }
 
+    /**
+     * Solves the cell and gets the cell value
+     *
+     * @param cell
+     * @param theSpreadsheet
+     */
     public void solve(Cell cell,Spreadsheet theSpreadsheet) {
         cell.thisCell.getValue();
     }
