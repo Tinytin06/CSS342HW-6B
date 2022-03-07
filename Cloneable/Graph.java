@@ -24,8 +24,8 @@ public class Graph {
         sourceNameCell.feedInto.add(destNameCell);
         destNameCell.dependsOn.add(sourceNameCell);
         destNameCell.dist = destNameCell.dependsOn.size();
-        System.out.println("Source name: " + sourceNameCell);
-        System.out.println("Destination name " + destNameCell);
+        //System.out.println("Source name: " + sourceNameCell);
+        //System.out.println("Destination name " + destNameCell);
     }
 
     public void printPath( String destName ) throws NoSuchElementException {

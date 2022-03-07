@@ -75,7 +75,9 @@ public class Spreadsheet {
 	 */
 	public void printValues() {
 		//recalc all values
-		recalcAll();
+		for (int i = 0; i < ROW; i++) {
+			recalcAll();
+		}
 
 		Object[][] data = new Object[ROW][COLUMN];
 		for (int i = 0; i < getNumRows(); i++) {
@@ -265,7 +267,7 @@ public class Spreadsheet {
 		}
 		ExpressionTree eTree = new ExpressionTree(expTreeTokenStack);
 		this.spreadsheetArray[cellToken.getRow()-1][cellToken.getColumn()].setValue(eTree.Evaluate(this));//austin
-		eTree.printTree();
+		//eTree.printTree();
 	}
 
 	public Cell[][] getSpreadsheetArray() {

@@ -75,14 +75,29 @@ public class ExpressionTree {
 		// The total is placed at the root.
 		if (root.token instanceof OperatorToken) {
 			opToken = (OperatorToken) root.token;
+
+
 			if (opToken.getOperatorToken() == OperatorToken.Plus) {
 				root.token.setValue(root.left.token.getValue() + root.right.token.getValue());
 			}
 			if (opToken.getOperatorToken() == OperatorToken.Minus) {
-				try {
-					root.token.setValue(root.left.token.getValue() - root.right.token.getValue());
-				} catch (NullPointerException e){
-					root.token.setValue(0 - root.right.token.getValue());
+				if(root.right.token instanceof OperatorToken){
+					if(((OperatorToken) root.right.token).getOperatorToken()==OperatorToken.Minus){
+						root.token.setValue(root.left.token.getValue() + root.right.right.token.getValue());
+						try{
+							root.token.setValue(root.left.token.getValue() - root.right.token.getValue());
+						} catch (NullPointerException e){
+							root.token.setValue(-1 * root.right.token.getValue());
+						}
+					}else {
+						throw new IllegalArgumentException("Bad Cell");
+					}
+				} else{
+					try{
+						root.token.setValue(root.left.token.getValue() - root.right.token.getValue());
+					} catch (NullPointerException e){
+						root.token.setValue(-1 * root.right.token.getValue());
+					}
 				}
 			}
 			if (opToken.getOperatorToken() == OperatorToken.Mult) {
