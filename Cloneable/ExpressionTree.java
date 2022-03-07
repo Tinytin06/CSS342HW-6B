@@ -79,7 +79,11 @@ public class ExpressionTree {
 				root.token.setValue(root.left.token.getValue() + root.right.token.getValue());
 			}
 			if (opToken.getOperatorToken() == OperatorToken.Minus) {
-				root.token.setValue(root.left.token.getValue() - root.right.token.getValue());
+				try {
+					root.token.setValue(root.left.token.getValue() - root.right.token.getValue());
+				} catch (NullPointerException e){
+					root.token.setValue(0 - root.right.token.getValue());
+				}
 			}
 			if (opToken.getOperatorToken() == OperatorToken.Mult) {
 				root.token.setValue(root.left.token.getValue() * root.right.token.getValue());
