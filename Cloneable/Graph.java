@@ -94,25 +94,31 @@ public class Graph {
     public void topSort(Spreadsheet theSpreadsheet) {
         Cell[][] theArr = theSpreadsheet.getSpreadsheetArray();
         int counter = 0;
+        int secondCounter = 0;
         Queue solveTheseFirst = new LinkedList();
         for (int i = 0; i < theSpreadsheet.getNumRows(); i++) {
             for (int j = 0; j < theSpreadsheet.getNumColumns(); j++) {
                 if (theArr[i][j].dist == 0) {
                     solveTheseFirst.add(theArr[i][j]);
+                    secondCounter++;
                 }
             }
         }
+        //int queueSize = 0;
         while(!solveTheseFirst.isEmpty()){
             Cell current= (Cell) solveTheseFirst.remove();
+            counter++;
             solve(current,theSpreadsheet);
+
             for (Cell c: current.feedInto) {
                 if (--c.dist == 0) {
                     solveTheseFirst.add(c);
+                    secondCounter++;
                 }
-//                if (counter != theSpreadsheet.getNumColumns() * theSpreadsheet.getNumRows()) {
-//                	throw new RuntimeException("CycleFound");
-//                }
             }
+        }
+        if (counter != secondCounter) {
+            throw new RuntimeException("CycleFound");
         }
     }
 
