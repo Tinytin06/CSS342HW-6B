@@ -24,6 +24,7 @@ public class Graph {
         sourceNameCell.feedInto.add(destNameCell);
         destNameCell.dependsOn.add(sourceNameCell);
         destNameCell.dist = destNameCell.dependsOn.size();
+        //System.out.println(destNameCell.dist);
         //System.out.println("Source name: " + sourceNameCell.getFormula());
         //System.out.println("Destination name " + destNameCell.getFormula());
     }
@@ -111,7 +112,6 @@ public class Graph {
             counter++;
             solve(current,theSpreadsheet);
             for (Cell c: current.feedInto) {
-
                 if (--c.dist == 0) {
                     solveTheseFirst.add(c);
                 }
@@ -119,8 +119,6 @@ public class Graph {
         }
 
         if (counter != secondCounter) {
-            System.out.println(counter);
-            System.out.println(secondCounter);
             throw new RuntimeException("CycleFound");
         }
     }

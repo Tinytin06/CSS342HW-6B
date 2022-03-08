@@ -260,8 +260,10 @@ public class Spreadsheet {
 		while(!tokenStack.isEmpty()) {
 			token = (Token) tokenStack.topAndPop();
 			if (token instanceof CellToken) {
-				graph.addEdge(token, cellToken);
-				graph.addEdge((CellToken) token, cellToken, this.getSpreadsheetArray());
+				if((CellToken)token==cellToken) {
+					graph.addEdge(token, cellToken);
+					graph.addEdge((CellToken) token, cellToken, this.getSpreadsheetArray());
+				}
 
 			}
 		}
