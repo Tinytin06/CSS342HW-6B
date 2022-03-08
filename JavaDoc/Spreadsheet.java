@@ -343,6 +343,8 @@ public class Spreadsheet {
 	 * level of precedence, grouping is from left to right.
 	 *
 	 * This algorithm follows the algorithm described in Weiss, pages 105-108.
+	 * 
+	 * @param the string inputed by the user.
 	 */
 	private Stack getFormula(String formula) {
 		Stack returnStack = new Stack();  // stack of Tokens (representing a postfix expression)

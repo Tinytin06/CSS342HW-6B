@@ -30,8 +30,8 @@ public class Graph {
     }
 	
 	/**
-	 * Topological sorts cell by cell that way we know which 
-	 * cell we can sort out w/o any other cell
+	 * Topological sorts cell by cell so that way we know which 
+	 * cell we can sort out.
 	 * 
 	 * @param theSpreadsheet the spreadsheet of the cells.
 	 */

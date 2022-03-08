@@ -1,7 +1,8 @@
 package homeworkSixB;
 
 /**
- * Binary tree 
+ * Binary tree that composes of tokens to be used
+ * to calculate the total.
  * @version Winter 2022
  *
  */
@@ -25,7 +26,7 @@ public class ExpressionTree {
 	
 	/**
 	 * Constructor that initializes the stack with the stack of Tokens.
-	 * @param theStack
+	 * @param theStack the stack of tokens to be set to myStack.
 	 */
 	public ExpressionTree(Stack theStack) {
 		myStack = theStack;
